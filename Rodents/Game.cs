@@ -68,6 +68,7 @@ public class Game
 
     private async Task GameLoop()
     {
+        int tick = 0;
         while (!_gameState.GameOver)
         {
             Draw();
@@ -77,8 +78,15 @@ public class Game
                 break;
             }
             _gameState.Move();
-            //_gameState.MoveCat();
-            await Task.Delay(200);
+            
+            // Make cat move slower than rats
+            if (tick % 3 == 0)
+            {
+                _gameState.MoveCat();
+            }
+            _gameState.CheckCatCollision();
+            await Task.Delay(150);
+            tick++;
         }
     }
     public void Draw()

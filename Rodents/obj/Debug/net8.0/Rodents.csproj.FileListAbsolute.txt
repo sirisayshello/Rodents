@@ -12,3 +12,4 @@
 /Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.pdb
 /Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.genruntimeconfig.cache
 /Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/ref/Rodents.dll
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.sourcelink.json

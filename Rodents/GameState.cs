@@ -31,7 +31,7 @@ public class GameState
     {
         int r = Rows / 2;
 
-        for (int c = 1; c <= 2; c++)
+        for (int c = 1; c <= 3; c++)
         {
             Grid[r, c] = GridValue.Rat;
             _ratPositions.AddFirst(new Position(r, c));
@@ -93,20 +93,19 @@ public class GameState
         }
 
         Position pos = empty[_random.Next(empty.Count)];
-        //Position pos = new Position(10, 10);
         _catPositions.AddFirst(pos);
         Grid[pos.Row, pos.Col] = GridValue.Cat;
     }
 
     public bool CheckGameOver()
     {
-        if (_ratPositions.Count == 0)
+        if (_ratPositions.Count > 1)
         {
-            Console.WriteLine("Game over");
-            GameOver = true; 
-            return true;
+            return false;
         }
-        return false;
+        Console.WriteLine("Game over");
+        GameOver = true; 
+        return true;
     }
     
     public Position CatPosition()
@@ -126,7 +125,7 @@ public class GameState
     
     private void AddAnotherCat(Position pos)
     {
-        _ratPositions.AddFirst(pos);
+        _catPositions.AddFirst(pos);
         Grid[pos.Row, pos.Col] = GridValue.Cat;
     }
     
@@ -155,7 +154,7 @@ public class GameState
         Dir = dir;
     }
     
-    private GridValue WillHit(Position newHeadPos)
+    private GridValue NextMove(Position newHeadPos)
     {
         if (newHeadPos == TailPosition())
         {
@@ -169,41 +168,68 @@ public class GameState
     {
         Position ratPosition = HeadPosition();
         Position newCatPosition = CatPosition();
-        GridValue hit = WillHit(newCatPosition);
-        
-        foreach (var catPosition in _catPositions)
-        {
-            if (ratPosition.Col > catPosition.Col)
+
+            if (ratPosition.Col > CatPosition().Col)
             { 
-                //newCatPosition.Translate(Direction.Right);
                 AddAnotherCat(newCatPosition.Translate(Direction.Right));
+                RemoveOldCat();
+            }
+            else if (ratPosition.Row > CatPosition().Row)
+            {
+                AddAnotherCat(newCatPosition.Translate(Direction.Down));
+                RemoveOldCat();
+            }
+            else if (ratPosition.Col < CatPosition().Col)
+            {
+                AddAnotherCat(newCatPosition.Translate(Direction.Left));
+                RemoveOldCat();
+            }
+            else if (ratPosition.Row < CatPosition().Row)
+            {
+                AddAnotherCat(newCatPosition.Translate(Direction.Up));
+                RemoveOldCat();
             }
             
+    }
+
+    public void CheckCatCollision()
+    {
+        foreach (Position catPosition in _catPositions)
+        {
+            foreach (Position ratPosition in _ratPositions)
+            {
+                
+                if (ratPosition.Col == catPosition.Col && ratPosition.Row == catPosition.Row)
+                {
+                    RemoveTail();
+                    break;
+                }
+            }
         }
     }
 
     public void Move()
     {
         Position newHeadPos = HeadPosition().Translate(Dir);
-        GridValue hit = WillHit(newHeadPos);
+        GridValue nextMove = NextMove(newHeadPos);
         
-        if (hit == GridValue.Empty)
+        if (nextMove == GridValue.Empty)
         {
             RemoveTail();
             AddHead(newHeadPos);
         }
         
-        else if (hit == GridValue.Cat)
-        {
-            RemoveTail();
-        }
+        //else if (nextMove == GridValue.Cat)
+       // {
+        //    RemoveTail();
+       // }
         
-        else if (hit == GridValue.Cheese)
+        else if (nextMove == GridValue.Cheese)
         {
             AddHead(newHeadPos);
             Score++;
             AddCheese();
-            AddCat();
+            //AddCat();
         }
     }
 }
