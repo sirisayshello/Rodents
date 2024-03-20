@@ -10,7 +10,7 @@ public class GameState
     public bool GameOver { get; private set; }
 
     private readonly LinkedList<Position> _ratPositions = new LinkedList<Position>();
-    private readonly LinkedList<Position> _catPositions = new LinkedList<Position>();
+    private readonly List<Position> _catPositions = new List<Position>();
     private readonly Random _random = new Random();
 
     public GameState(int rows, int cols)
@@ -93,7 +93,7 @@ public class GameState
         }
 
         Position pos = empty[_random.Next(empty.Count)];
-        _catPositions.AddFirst(pos);
+        _catPositions.Add(pos);
         Grid[pos.Row, pos.Col] = GridValue.Cat;
     }
 
@@ -108,11 +108,6 @@ public class GameState
         return true;
     }
     
-    public Position CatPosition()
-    {
-        return _catPositions.First.Value;
-    }
-
     public Position HeadPosition()
     {
         return _ratPositions.First.Value;
@@ -125,15 +120,15 @@ public class GameState
     
     private void AddAnotherCat(Position pos)
     {
-        _catPositions.AddFirst(pos);
+        //_catPositions.AddFirst(pos);
         Grid[pos.Row, pos.Col] = GridValue.Cat;
     }
     
-    private void RemoveOldCat()
+    private void RemoveOldCat(Position pos)
     {
-        Position oldCat = _catPositions.Last.Value;
-        Grid[oldCat.Row, oldCat.Col] = GridValue.Empty;
-        _catPositions.RemoveLast();
+        //Position oldCat = _catPositions.Last.Value;
+        Grid[pos.Row, pos.Col] = GridValue.Empty;
+        //_catPositions.RemoveLast();
     }
 
     private void AddHead(Position pos)
@@ -167,29 +162,39 @@ public class GameState
     public void MoveCat()
     {
         Position ratPosition = HeadPosition();
-        Position newCatPosition = CatPosition();
+        //Position newCatPosition = CatPosition();
 
-            if (ratPosition.Col > CatPosition().Col)
+        for (int i = 0; i < _catPositions.Count; i++)
+        {
+            Position catPosition = _catPositions[i];
+            RemoveOldCat(catPosition);
+            
+            if (ratPosition.Col > catPosition.Col)
             { 
-                AddAnotherCat(newCatPosition.Translate(Direction.Right));
-                RemoveOldCat();
+                Position newCatPosition = catPosition.Translate(Direction.Right);
+                AddAnotherCat(newCatPosition);
+                _catPositions[i] = newCatPosition;
             }
-            else if (ratPosition.Row > CatPosition().Row)
+            else if (ratPosition.Row > catPosition.Row)
             {
-                AddAnotherCat(newCatPosition.Translate(Direction.Down));
-                RemoveOldCat();
+                Position newCatPosition = catPosition.Translate(Direction.Down);
+                AddAnotherCat(newCatPosition);
+                _catPositions[i] = newCatPosition;
             }
-            else if (ratPosition.Col < CatPosition().Col)
+            else if (ratPosition.Col < catPosition.Col)
             {
-                AddAnotherCat(newCatPosition.Translate(Direction.Left));
-                RemoveOldCat();
+                Position newCatPosition = catPosition.Translate(Direction.Left);
+                AddAnotherCat(newCatPosition);
+                _catPositions[i] = newCatPosition;
             }
-            else if (ratPosition.Row < CatPosition().Row)
+            else if (ratPosition.Row < catPosition.Row)
             {
-                AddAnotherCat(newCatPosition.Translate(Direction.Up));
-                RemoveOldCat();
+                Position newCatPosition = catPosition.Translate(Direction.Left);
+                AddAnotherCat(newCatPosition);
+                _catPositions[i] = newCatPosition;
             }
             
+        }
     }
 
     public void CheckCatCollision()
@@ -219,17 +224,15 @@ public class GameState
             AddHead(newHeadPos);
         }
         
-        //else if (nextMove == GridValue.Cat)
-       // {
-        //    RemoveTail();
-       // }
-        
         else if (nextMove == GridValue.Cheese)
         {
             AddHead(newHeadPos);
             Score++;
             AddCheese();
-            //AddCat();
+            if (Score % 2 == 0)
+            {
+                AddCat();
+            }
         }
     }
 }

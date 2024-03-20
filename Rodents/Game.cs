@@ -80,12 +80,12 @@ public class Game
             _gameState.Move();
             
             // Make cat move slower than rats
-            if (tick % 3 == 0)
+            if (tick % 5 == 0)
             {
                 _gameState.MoveCat();
             }
             _gameState.CheckCatCollision();
-            await Task.Delay(150);
+            await Task.Delay(175);
             tick++;
         }
     }
