@@ -1,0 +1,14 @@
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/bin/Debug/net8.0/Rodents
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/bin/Debug/net8.0/Rodents.deps.json
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/bin/Debug/net8.0/Rodents.runtimeconfig.json
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/bin/Debug/net8.0/Rodents.dll
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/bin/Debug/net8.0/Rodents.pdb
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.GeneratedMSBuildEditorConfig.editorconfig
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.AssemblyInfoInputs.cache
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.AssemblyInfo.cs
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.csproj.CoreCompileInputs.cache
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.dll
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/refint/Rodents.dll
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.pdb
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/Rodents.genruntimeconfig.cache
+/Users/sirisjolin/RiderProjects/Rodents/Rodents/obj/Debug/net8.0/ref/Rodents.dll
