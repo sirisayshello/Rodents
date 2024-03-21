@@ -11,8 +11,8 @@ public class Game
         { GridValue.Cat, Emojis.Cat }
     };
 
-    private ConsoleColor _backgroundColor = ConsoleColor.DarkRed;
-    private readonly int _rows = 15, _cols = 15;
+    private readonly ConsoleColor _backgroundColor = ConsoleColor.DarkRed;
+    private readonly int _rows = 15, _cols = 20;
     private readonly GameState _gameState;
 
     public Game()
@@ -20,7 +20,7 @@ public class Game
         _gameState = new GameState(_rows, _cols);
     }
 
-    private void console_KeyDown()
+    private void CheckKeyDown()
     {
         if (_gameState.GameOver)
         {
@@ -59,7 +59,7 @@ public class Game
 
     public void StartScreen()
     {
-        Console.SetCursorPosition(1, _rows+1);
+        Console.SetCursorPosition(1, 1);
         Console.BackgroundColor = _backgroundColor;
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine("PRESS ENTER TO START");
@@ -71,15 +71,16 @@ public class Game
         int tick = 0;
         while (!_gameState.GameOver)
         {
-            Draw();
-            console_KeyDown();
             if (_gameState.CheckGameOver())
             {
                 break;
             }
+            
+            Draw();
+            CheckKeyDown();
             _gameState.Move();
             
-            // Make cat move slower than rats
+            // Make cats slower than rats
             if (tick % 5 == 0)
             {
                 _gameState.MoveCat();
@@ -89,7 +90,7 @@ public class Game
             tick++;
         }
     }
-    public void Draw()
+    private void Draw()
     {
         Console.SetCursorPosition(1, _rows+1);
         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -106,7 +107,7 @@ public class Game
                 Console.BackgroundColor = _backgroundColor;
                 GridValue gridVal = _gameState.Grid[r, c];
                 string emoji = _gridValToEmoji[gridVal];
-                // emojis take up more space, c+c solves that (don't touch, don't ask)
+                // emojis take up more space, c+c solves that
                 Console.SetCursorPosition(c+c, r);
                 Console.Write(emoji);
             }

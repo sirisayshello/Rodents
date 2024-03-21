@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rodents")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a4f65e30afc2eb75197e8294dea2816f4e3b23f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9eb9b48007fa9300fa7f6772e4f8940d4e99279d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rodents")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rodents")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

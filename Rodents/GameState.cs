@@ -72,7 +72,7 @@ public class GameState
     {
         List<Position> empty = new List<Position>(EmptyPositions());
 
-        // In case the board is full
+        // In case the board is full, wow
         if (empty.Count == 0)
         {
             return;
@@ -86,7 +86,7 @@ public class GameState
     {
         List<Position> empty = new List<Position>(EmptyPositions());
 
-        // In case the board is full
+        // In case the board is full, probably not gonna happen
         if (empty.Count == 0)
         {
             return;
@@ -99,7 +99,7 @@ public class GameState
 
     public bool CheckGameOver()
     {
-        if (_ratPositions.Count > 1)
+        if (_ratPositions.Count > 0)
         {
             return false;
         }
@@ -120,15 +120,12 @@ public class GameState
     
     private void AddAnotherCat(Position pos)
     {
-        //_catPositions.AddFirst(pos);
         Grid[pos.Row, pos.Col] = GridValue.Cat;
     }
     
     private void RemoveOldCat(Position pos)
     {
-        //Position oldCat = _catPositions.Last.Value;
         Grid[pos.Row, pos.Col] = GridValue.Empty;
-        //_catPositions.RemoveLast();
     }
 
     private void AddHead(Position pos)
@@ -162,38 +159,43 @@ public class GameState
     public void MoveCat()
     {
         Position ratPosition = HeadPosition();
-        //Position newCatPosition = CatPosition();
 
         for (int i = 0; i < _catPositions.Count; i++)
         {
             Position catPosition = _catPositions[i];
+            Position newCatPosition = catPosition;
             RemoveOldCat(catPosition);
             
             if (ratPosition.Col > catPosition.Col)
             { 
-                Position newCatPosition = catPosition.Translate(Direction.Right);
-                AddAnotherCat(newCatPosition);
-                _catPositions[i] = newCatPosition;
+                newCatPosition = catPosition.Translate(Direction.Right);
             }
             else if (ratPosition.Row > catPosition.Row)
             {
-                Position newCatPosition = catPosition.Translate(Direction.Down);
-                AddAnotherCat(newCatPosition);
-                _catPositions[i] = newCatPosition;
+                newCatPosition = catPosition.Translate(Direction.Down);
             }
             else if (ratPosition.Col < catPosition.Col)
             {
-                Position newCatPosition = catPosition.Translate(Direction.Left);
-                AddAnotherCat(newCatPosition);
-                _catPositions[i] = newCatPosition;
+                newCatPosition = catPosition.Translate(Direction.Left);
             }
             else if (ratPosition.Row < catPosition.Row)
             {
-                Position newCatPosition = catPosition.Translate(Direction.Left);
-                AddAnotherCat(newCatPosition);
-                _catPositions[i] = newCatPosition;
+                newCatPosition = catPosition.Translate(Direction.Up);
             }
             
+            
+            GridValue nextMove = NextMove(newCatPosition);
+            if (nextMove == GridValue.Cheese)
+            {
+                AddCheese();
+            }
+            // If cat next to cat, make them scatter randomly
+            if (nextMove == GridValue.Cat)
+            {
+                newCatPosition = newCatPosition.Translate(Direction.Random);
+            }
+            AddAnotherCat(newCatPosition);
+            _catPositions[i] = newCatPosition;
         }
     }
 
@@ -229,6 +231,7 @@ public class GameState
             AddHead(newHeadPos);
             Score++;
             AddCheese();
+            // Add cat every other cheese, for fun 
             if (Score % 2 == 0)
             {
                 AddCat();
