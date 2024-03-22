@@ -2,4 +2,6 @@
 
 # Rodents
 
-Console game with C#
+Eat the cheese, avoid the cats and build your rodent army.
+
+A console built game with C#
