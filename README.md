@@ -4,4 +4,4 @@
 
 Eat the cheese, avoid the cats and build your rodent army.
 
-A console built game with C#
+A console game built with C#
